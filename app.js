@@ -1,11 +1,9 @@
 const PORT = process.env.PORT || 8080;
 const express = require('express');
-const serverless = require('serverless-http');
 const axios = require('axios');
 const cheerio = require('cheerio');
 
 const app = express();
-const router = express.Router();
 
 const list = [];
 
@@ -109,5 +107,3 @@ app.listen(PORT, () => {
     console.log(`ATP API listening at http://localhost:${PORT}`);
 });
 
-app.use('/.netlify/functions/api', router); // path must route to lambda
-module.exports.handler = serverless(app);
