@@ -106,4 +106,3 @@ app.get('/data', (req, res) => {
 app.listen(PORT, () => {
     console.log(`ATP API listening at http://localhost:${PORT}`);
 });
-
