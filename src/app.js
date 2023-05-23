@@ -1,15 +1,18 @@
 const PORT = process.env.PORT || 8080;
 const express = require('express');
+const serverless = require('serverless-http');
 const axios = require('axios');
 const cheerio = require('cheerio');
 
 const app = express();
+const router = express.Router();
 
 const list = [];
 
 // set url for all the videos
 const url = 'https://atp.allthepreaching.com/atp/api';
 
+// axios
 axios
     .get(url)
     .then((response) => {
@@ -47,14 +50,6 @@ axios
         });
     })
     .catch((err) => console.log(err));
-
-app.get('/', (req, res) => {
-    res.json('Welcome to the ATP API');
-});
-
-app.get('/data', (req, res) => {
-    res.json(list);
-});
 
 app.get('/data/:category', async (req, res) => {
     const category = req.params.category;
@@ -102,6 +97,17 @@ app.get('/data/:category', async (req, res) => {
         .catch((err) => console.log(err));
 });
 
+app.get('/', (req, res) => {
+    res.json('Welcome to the ATP API');
+});
+
+app.get('/data', (req, res) => {
+    res.json(list);
+});
+
 app.listen(PORT, () => {
     console.log(`ATP API listening at http://localhost:${PORT}`);
 });
+
+app.use('/.netlify/functions/api', router); // path must route to lambda
+module.exports.handler = serverless(app);
