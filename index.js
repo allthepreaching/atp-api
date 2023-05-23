@@ -7,7 +7,6 @@ const app = express();
 
 const list = [];
 const url = 'https://atp.allthepreaching.com/atp/api';
-// const url = 'http://192.168.0.171/CodesEasy/Simple-API-MySQL/';
 
 axios
     .get(url)
