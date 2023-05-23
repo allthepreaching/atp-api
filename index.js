@@ -6,6 +6,8 @@ const cheerio = require('cheerio');
 const app = express();
 
 const list = [];
+
+// set url for all the videos
 const url = 'https://atp.allthepreaching.com/atp/api';
 
 axios
