@@ -2,23 +2,19 @@ const PORT = process.env.PORT || 8080;
 const express = require('express');
 const axios = require('axios');
 const cheerio = require('cheerio');
-
 const app = express();
-
+const url = 'https://atp.allthepreaching.com/atp/api';
 const list = [];
 
-// set url for all the videos
-const url = 'https://atp.allthepreaching.com/atp/api';
-
-// axios
 axios
     .get(url)
     .then((response) => {
         const html = response.data;
         const $ = cheerio.load(html);
-
         $('.video').each(function () {
             const id = $(this).find('#vidId').text();
+            const videoId = $(this).find('#videoId').text();
+            const profileId = $(this).find('#profileId').text();
             const vidCategory = $(this).find('#vidCategory').text();
             const searchCategory = $(this).find('#searchCategory').text();
             const preacher = $(this).find('#vidPreacher').text();
@@ -30,37 +26,44 @@ axios
             const thumbUrl = $(this).find('#thumbUrl').text();
             const pictureUrl = $(this).find('#picUrl').text();
             const headerUrl = $(this).find('#headerUrl').text();
-
             list.push({
-                id,
-                vidCategory,
-                searchCategory,
-                preacher,
-                name,
-                title,
-                code,
-                date,
-                videoUrl,
-                thumbUrl,
-                pictureUrl,
-                headerUrl,
+                info: [{ id, videoId: videoId, profileId: profileId }],
+                content: [
+                    {
+                        vidCategory,
+                        searchCategory,
+                        preacher,
+                        name,
+                        title,
+                        code,
+                        date,
+                        videoUrl,
+                        thumbUrl,
+                        pictureUrl,
+                        headerUrl,
+                    },
+                ],
             });
         });
     })
     .catch((err) => console.log(err));
 
+app.get('/data', (req, res) => {
+    res.json([{ videos: list }]);
+});
+
 app.get('/data/:category', async (req, res) => {
     const category = req.params.category;
-
     axios
         .get(url)
         .then((response) => {
             const html = response.data;
             const $ = cheerio.load(html);
             const specificCategory = [];
-
             $('.video').each(function () {
-                const id = $(this).find('#vidId').text();
+                const id = $(this).find('#id').text();
+                const videoId = $(this).find('#videoId').text();
+                const profileId = $(this).find('#profileId').text();
                 const vidCategory = $(this).find('#vidCategory').text();
                 const searchCategory = $(this).find('#searchCategory').text();
                 const preacher = $(this).find('#vidPreacher').text();
@@ -74,18 +77,22 @@ app.get('/data/:category', async (req, res) => {
                 const headerUrl = $(this).find('#headerUrl').text();
                 if (vidCategory === category) {
                     specificCategory.push({
-                        id,
-                        vidCategory,
-                        searchCategory,
-                        preacher,
-                        name,
-                        title,
-                        code,
-                        date,
-                        videoUrl,
-                        thumbUrl,
-                        pictureUrl,
-                        headerUrl,
+                        info: [{ id, videoId: videoId, profileId: profileId }],
+                        content: [
+                            {
+                                vidCategory,
+                                searchCategory,
+                                preacher,
+                                name,
+                                title,
+                                code,
+                                date,
+                                videoUrl,
+                                thumbUrl,
+                                pictureUrl,
+                                headerUrl,
+                            },
+                        ],
                     });
                 }
             });
@@ -96,23 +103,6 @@ app.get('/data/:category', async (req, res) => {
 
 app.get('/', (req, res) => {
     res.json('Welcome to the ATP API');
-});
-
-app.get('/data', (req, res) => {
-    const videos = list.map((video) => ({
-        id: video.id,
-        vidCategory: video.vidCategory,
-        preacher: video.preacher,
-        name: video.name,
-        title: video.title,
-        code: video.code,
-        date: video.date,
-        videoUrl: video.videoUrl,
-        thumbUrl: video.thumbUrl,
-        pictureUrl: video.pictureUrl,
-        headerUrl: video.headerUrl,
-    }));
-    res.json([{ videos: videos }]);
 });
 
 app.listen(PORT, () => {
