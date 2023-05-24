@@ -12,7 +12,7 @@ axios
         const html = response.data;
         const $ = cheerio.load(html);
         $('.video').each(function () {
-            const id = $(this).find('#vidId').text();
+            const id = $(this).find('#id').text();
             const videoId = $(this).find('#videoId').text();
             const profileId = $(this).find('#profileId').text();
             const vidCategory = $(this).find('#vidCategory').text();
