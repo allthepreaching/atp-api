@@ -89,8 +89,7 @@ app.get('/data/:category', async (req, res) => {
                     });
                 }
             });
-            res.json(specificCategory);
-            console.log(specificCategory.name);
+            res.json({ videos: specificCategory });
         })
         .catch((err) => console.log(err));
 });
@@ -100,7 +99,20 @@ app.get('/', (req, res) => {
 });
 
 app.get('/data', (req, res) => {
-    res.json(list);
+    const videos = list.map((video) => ({
+        id: video.id,
+        vidCategory: video.vidCategory,
+        preacher: video.preacher,
+        name: video.name,
+        title: video.title,
+        code: video.code,
+        date: video.date,
+        videoUrl: video.videoUrl,
+        thumbUrl: video.thumbUrl,
+        pictureUrl: video.pictureUrl,
+        headerUrl: video.headerUrl,
+    }));
+    res.json([{ videos: videos }]);
 });
 
 app.listen(PORT, () => {
