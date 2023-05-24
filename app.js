@@ -12,7 +12,7 @@ axios
         const html = response.data;
         const $ = cheerio.load(html);
         $('.video').each(function () {
-            const id = $(this).find('#vidId').text();
+            const id = $(this).find('#id').text();
             const videoId = $(this).find('#videoId').text();
             const profileId = $(this).find('#profileId').text();
             const vidCategory = $(this).find('#vidCategory').text();
@@ -27,22 +27,20 @@ axios
             const pictureUrl = $(this).find('#picUrl').text();
             const headerUrl = $(this).find('#headerUrl').text();
             list.push({
-                info: [{ id, videoId: videoId, profileId: profileId }],
-                content: [
-                    {
-                        vidCategory,
-                        searchCategory,
-                        preacher,
-                        name,
-                        title,
-                        code,
-                        date,
-                        videoUrl,
-                        thumbUrl,
-                        pictureUrl,
-                        headerUrl,
-                    },
-                ],
+                info: { id, videoId: videoId, profileId: profileId },
+                content: {
+                    vidCategory,
+                    searchCategory,
+                    preacher,
+                    name,
+                    title,
+                    code,
+                    date,
+                    videoUrl,
+                    thumbUrl,
+                    pictureUrl,
+                    headerUrl,
+                },
             });
         });
     })
@@ -77,22 +75,20 @@ app.get('/data/:category', async (req, res) => {
                 const headerUrl = $(this).find('#headerUrl').text();
                 if (vidCategory === category) {
                     specificCategory.push({
-                        info: [{ id, videoId: videoId, profileId: profileId }],
-                        content: [
-                            {
-                                vidCategory,
-                                searchCategory,
-                                preacher,
-                                name,
-                                title,
-                                code,
-                                date,
-                                videoUrl,
-                                thumbUrl,
-                                pictureUrl,
-                                headerUrl,
-                            },
-                        ],
+                        info: { id, videoId: videoId, profileId: profileId },
+                        content: {
+                            vidCategory,
+                            searchCategory,
+                            preacher,
+                            name,
+                            title,
+                            code,
+                            date,
+                            videoUrl,
+                            thumbUrl,
+                            pictureUrl,
+                            headerUrl,
+                        },
                     });
                 }
             });
