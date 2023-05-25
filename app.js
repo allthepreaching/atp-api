@@ -76,7 +76,7 @@ app.get('/data/:category', async (req, res) => {
                 const thumbUrl = $(this).find('#thumbUrl').text();
                 const pictureUrl = $(this).find('#picUrl').text();
                 const headerUrl = $(this).find('#headerUrl').text();
-                if (vidCategory === category) {
+                if (mainCategory === category) {
                     specificCategory.push({
                         info: { id, videoId: videoId, profileId: profileId },
                         content: {
