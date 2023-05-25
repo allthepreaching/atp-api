@@ -49,7 +49,7 @@ axios
     .catch((err) => console.log(err));
 
 app.get('/data', (req, res) => {
-    res.json([{ videos: list }]);
+    res.json({ videos: list });
 });
 
 app.get('/data/:category', async (req, res) => {
