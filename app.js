@@ -17,6 +17,7 @@ axios
             const profileId = $(this).find('#profileId').text();
             const vidCategory = $(this).find('#vidCategory').text();
             const searchCategory = $(this).find('#searchCategory').text();
+            const mainCategory = $(this).find('#mainCategory').text();
             const preacher = $(this).find('#vidPreacher').text();
             const name = $(this).find('#vidName').text();
             const title = $(this).find('#vidTitle').text();
@@ -31,6 +32,7 @@ axios
                 content: {
                     vidCategory,
                     searchCategory,
+                    mainCategory,
                     preacher,
                     name,
                     title,
@@ -64,6 +66,7 @@ app.get('/data/:category', async (req, res) => {
                 const profileId = $(this).find('#profileId').text();
                 const vidCategory = $(this).find('#vidCategory').text();
                 const searchCategory = $(this).find('#searchCategory').text();
+                const mainCategory = $(this).find('#mainCategory').text();
                 const preacher = $(this).find('#vidPreacher').text();
                 const name = $(this).find('#vidName').text();
                 const title = $(this).find('#vidTitle').text();
@@ -79,6 +82,7 @@ app.get('/data/:category', async (req, res) => {
                         content: {
                             vidCategory,
                             searchCategory,
+                            mainCategory,
                             preacher,
                             name,
                             title,
