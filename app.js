@@ -27,6 +27,7 @@ axios
             const thumbUrl = $(this).find('#thumbUrl').text();
             const pictureUrl = $(this).find('#picUrl').text();
             const headerUrl = $(this).find('#headerUrl').text();
+            const createdAt = $(this).find('#createdAt').text();
             list.push({
                 info: { id, videoId: videoId, profileId: profileId },
                 content: {
@@ -42,6 +43,7 @@ axios
                     thumbUrl,
                     pictureUrl,
                     headerUrl,
+                    createdAt,
                 },
             });
         });
@@ -76,6 +78,7 @@ app.get('/data/:category', async (req, res) => {
                 const thumbUrl = $(this).find('#thumbUrl').text();
                 const pictureUrl = $(this).find('#picUrl').text();
                 const headerUrl = $(this).find('#headerUrl').text();
+                const createdAt = $(this).find('#createdAt').text();
                 if (mainCategory === category) {
                     specificCategory.push({
                         info: { id, videoId: videoId, profileId: profileId },
@@ -92,6 +95,7 @@ app.get('/data/:category', async (req, res) => {
                             thumbUrl,
                             pictureUrl,
                             headerUrl,
+                            createdAt,
                         },
                     });
                 }
